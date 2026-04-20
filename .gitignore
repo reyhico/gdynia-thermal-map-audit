@@ -1,0 +1,87 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Type checkers
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Linters / formatters
+.ruff_cache/
+
+# Jupyter
+*.ipynb_checkpoints/
+.ipynb_checkpoints/
+
+# Data directories (keep .gitkeep)
+data/raw/*
+data/interim/*
+data/processed/*
+data/external/*
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+!data/processed/.gitkeep
+!data/external/.gitkeep
+!data/annotations/.gitkeep
+!data/demo/
+
+# Outputs (keep .gitkeep for subdirs)
+outputs/logs/*
+!outputs/logs/.gitkeep
+
+# Raster / image formats
+*.geotiff
+*.tiff
+*.tif
+*.jp2
+*.img
+*.hdf
+*.h5
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs
+.idea/
+*.swp
+*.swo
+*~
+
+# Temp files
+*.tmp
+*.bak
+
+# Secrets
+*.pem
+*.key
+secrets/

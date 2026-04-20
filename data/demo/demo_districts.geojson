@@ -1,0 +1,90 @@
+{
+  "type": "FeatureCollection",
+  "name": "demo_districts",
+  "crs": {
+    "type": "name",
+    "properties": {"name": "urn:ogc:def:crs:OGC:1.3:CRS84"}
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": 1,
+      "properties": {
+        "district_id": "GDY-01",
+        "name": "Śródmieście",
+        "area_ha": 320.5,
+        "population": 18500
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [18.520, 54.510],
+          [18.560, 54.510],
+          [18.560, 54.535],
+          [18.520, 54.535],
+          [18.520, 54.510]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 2,
+      "properties": {
+        "district_id": "GDY-02",
+        "name": "Wzgórze Świętego Maksymiliana",
+        "area_ha": 275.8,
+        "population": 22100
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [18.490, 54.495],
+          [18.520, 54.495],
+          [18.520, 54.520],
+          [18.490, 54.520],
+          [18.490, 54.495]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 3,
+      "properties": {
+        "district_id": "GDY-03",
+        "name": "Chylonia",
+        "area_ha": 410.2,
+        "population": 31000
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [18.430, 54.520],
+          [18.490, 54.520],
+          [18.490, 54.555],
+          [18.430, 54.555],
+          [18.430, 54.520]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 4,
+      "properties": {
+        "district_id": "GDY-04",
+        "name": "Cisowa",
+        "area_ha": 188.7,
+        "population": 14200
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [18.470, 54.555],
+          [18.510, 54.555],
+          [18.510, 54.575],
+          [18.470, 54.575],
+          [18.470, 54.555]
+        ]]
+      }
+    }
+  ]
+}
