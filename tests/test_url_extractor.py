@@ -80,6 +80,6 @@ def test_extract_geospatial_urls():
     types = [item["type"] for item in geo]
     assert "wfs" in types
     assert "tile" in types
-    # Plain URL should not appear
+    # Plain URL should not appear (only geospatial URLs are returned)
     urls = [item["url"] for item in geo]
-    assert not any(u.startswith("https://plain.example.com") for u in urls)
+    assert "https://plain.example.com" not in urls
