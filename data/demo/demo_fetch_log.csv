@@ -1,0 +1,6 @@
+request_id,url,method,timestamp,status_code,content_type,content_length,duration_ms,local_path,checksum,error,notes
+REQ-0001,https://termalne.obliview.com,GET,2024-06-01T08:00:00Z,200,text/html; charset=utf-8,45210,342,,a3f1c2d4e5b6a7c8,,,Landing page
+REQ-0002,https://termalne.obliview.com/static/js/main.abc123.js,GET,2024-06-01T08:01:02Z,200,application/javascript,128450,1205,data/raw/js/main.abc123.js,b4g2d3e5f6c7d8e9,,Main JS bundle
+REQ-0003,https://termalne.obliview.com/wms?SERVICE=WMS&REQUEST=GetCapabilities,GET,2024-06-01T08:06:10Z,200,application/vnd.ogc.wms_xml,8932,890,data/raw/wms_capabilities.xml,d6i4f5g7h8e9f0a1,,WMS GetCapabilities
+REQ-0004,https://termalne.obliview.com/wfs?SERVICE=WFS&REQUEST=GetCapabilities,GET,2024-06-01T08:07:00Z,401,text/html,512,210,,,,"HTTP 401 Unauthorized","WFS requires authentication"
+REQ-0005,https://termalne.obliview.com/data/anomalies.geojson,GET,2024-06-01T08:10:00Z,404,text/html,1024,155,,,,,"Resource not found"

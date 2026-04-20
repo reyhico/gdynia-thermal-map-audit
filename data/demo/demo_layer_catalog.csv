@@ -1,0 +1,6 @@
+layer_id,source_url,service_type,layer_name,title,crs,format,bbox_wgs84,abstract,timestamp,notes
+LYR-001,https://termalne.obliview.com/wms,WMS,thermal_loss,Thermal Loss Index,EPSG:2180,image/png,"[18.38,54.42,18.65,54.60]",Apparent thermal-loss intensity index derived from aerial IR survey,2024-06-01T08:06:00Z,Main thermal layer
+LYR-002,https://termalne.obliview.com/wms,WMS,ortho_2023,Orthophoto 2023,EPSG:2180,image/jpeg,"[18.38,54.42,18.65,54.60]",RGB orthophotograph reference layer,2024-06-01T08:06:00Z,Background reference
+LYR-003,https://termalne.obliview.com/wms,WMS,buildings,Building Footprints,EPSG:2180,image/png,"[18.38,54.42,18.65,54.60]",Building outlines from BDOT10k,2024-06-01T08:06:00Z,
+LYR-004,https://termalne.obliview.com/api/tiles/{z}/{x}/{y}.png,WMTS,thermal_tiles,Thermal Tiles,EPSG:3857,image/png,"[18.38,54.42,18.65,54.60]",Slippy map tiles for thermal-loss index,2024-06-01T08:05:00Z,Tile URL template extracted from JS
+LYR-005,https://termalne.obliview.com/wfs,WFS,anomaly_points,Thermal Anomaly Points,EPSG:4326,application/json,"[18.38,54.42,18.65,54.60]",Point features marking detected thermal anomalies,2024-06-01T08:07:00Z,WFS endpoint discovered but requires auth
