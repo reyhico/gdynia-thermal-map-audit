@@ -1,0 +1,1 @@
+# gdynia-thermal-map-audit
