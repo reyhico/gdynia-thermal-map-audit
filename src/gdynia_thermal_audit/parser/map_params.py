@@ -3,14 +3,16 @@
 from __future__ import annotations
 
 import re
-from typing import Any, Optional
+from typing import Any
 
 _CENTER_RE = re.compile(
     r"""(?:center|latlng|setView)\s*[\(=:,\[]+\s*([-\d.]+)\s*,\s*([-\d.]+)""",
     re.IGNORECASE,
 )
 _ZOOM_RE = re.compile(r"""(?:zoom|setZoom)\s*[\(=:]+\s*(\d+)""", re.IGNORECASE)
-_CRS_RE = re.compile(r"""(?:crs|projection|srs)\s*[=:]\s*['"]?(EPSG:\d+|EPSG%3A\d+)['"]?""", re.IGNORECASE)
+_CRS_RE = re.compile(
+    r"""(?:crs|projection|srs)\s*[=:]\s*['"]?(EPSG:\d+|EPSG%3A\d+)['"]?""", re.IGNORECASE
+)
 _EXTENT_RE = re.compile(
     r"""(?:extent|bounds|bbox)\s*[=:\[]+\s*([-\d.]+)\s*,\s*([-\d.]+)\s*,\s*([-\d.]+)\s*,\s*([-\d.]+)""",
     re.IGNORECASE,

@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import logging
-from typing import Optional
 
 import pandas as pd
 
@@ -64,7 +63,9 @@ def validate_annotations(df: pd.DataFrame) -> tuple[bool, list[str]]:
             numeric = pd.to_numeric(df[coord_col], errors="coerce")
             bad = ((numeric < valid_range[0]) | (numeric > valid_range[1])).sum()
             if bad:
-                errors.append(f"{bad} out-of-range values in '{coord_col}' (expected {valid_range})")
+                errors.append(
+                    f"{bad} out-of-range values in '{coord_col}' (expected {valid_range})"
+                )
 
     # anomaly_scale_1_5 range
     if "anomaly_scale_1_5" in df.columns:

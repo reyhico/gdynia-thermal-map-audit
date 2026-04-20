@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Optional
-
 from pydantic import BaseModel, Field
 
 
@@ -12,7 +10,7 @@ class PipelineRunLog(BaseModel):
 
     run_id: str = Field(description="UUID v4 identifying this run")
     start_time: str = Field(description="UTC ISO 8601 start timestamp")
-    end_time: Optional[str] = Field(default=None, description="UTC ISO 8601 end timestamp")
+    end_time: str | None = Field(default=None, description="UTC ISO 8601 end timestamp")
     scenario: str = Field(
         description="Scenario used: auto | raster | vector | annotation",
         default="auto",
@@ -20,8 +18,8 @@ class PipelineRunLog(BaseModel):
     steps_completed: list[str] = Field(default_factory=list)
     errors: list[str] = Field(default_factory=list)
     output_paths: dict[str, str] = Field(default_factory=dict)
-    config_hash: Optional[str] = Field(
+    config_hash: str | None = Field(
         default=None, description="SHA-256 of the active config YAML file"
     )
-    python_version: Optional[str] = Field(default=None)
-    package_version: Optional[str] = Field(default=None)
+    python_version: str | None = Field(default=None)
+    package_version: str | None = Field(default=None)

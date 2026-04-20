@@ -92,10 +92,9 @@ select = [
     "SIM", # flake8-simplify
 ]
 ignore = [
-    "ANN101",  # self annotation not required
-    "ANN102",  # cls annotation not required
     "ANN201",  # public function return type (too noisy at early stage)
     "ANN001",  # function arg type (too noisy at early stage)
+    "ANN401",  # Any in annotations — used legitimately for HTTP session/response types
     "E501",    # line too long — handled by formatter
 ]
 

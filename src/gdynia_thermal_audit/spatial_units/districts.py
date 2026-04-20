@@ -28,7 +28,7 @@ def load_districts(path: Path | str) -> gpd.GeoDataFrame:
     gdf = gpd.read_file(path)
     log.info("Loaded %d districts from %s", len(gdf), path)
     if "district_id" not in gdf.columns:
-        gdf["district_id"] = [f"GDY-{i+1:02d}" for i in range(len(gdf))]
+        gdf["district_id"] = [f"GDY-{i + 1:02d}" for i in range(len(gdf))]
     if gdf.crs is None:
         log.warning("No CRS found; assuming EPSG:4326")
         gdf = gdf.set_crs(epsg=4326)
@@ -57,25 +57,33 @@ def get_gdynia_districts_placeholder() -> gpd.GeoDataFrame:
             "district_id": "GDY-01",
             "name": "Śródmieście",
             "area_ha": 320.5,
-            "geometry": Polygon([(18.520, 54.510), (18.560, 54.510), (18.560, 54.535), (18.520, 54.535)]),
+            "geometry": Polygon(
+                [(18.520, 54.510), (18.560, 54.510), (18.560, 54.535), (18.520, 54.535)]
+            ),
         },
         {
             "district_id": "GDY-02",
             "name": "Wzgórze Św. Maksymiliana",
             "area_ha": 275.8,
-            "geometry": Polygon([(18.490, 54.495), (18.520, 54.495), (18.520, 54.520), (18.490, 54.520)]),
+            "geometry": Polygon(
+                [(18.490, 54.495), (18.520, 54.495), (18.520, 54.520), (18.490, 54.520)]
+            ),
         },
         {
             "district_id": "GDY-03",
             "name": "Chylonia",
             "area_ha": 410.2,
-            "geometry": Polygon([(18.430, 54.520), (18.490, 54.520), (18.490, 54.555), (18.430, 54.555)]),
+            "geometry": Polygon(
+                [(18.430, 54.520), (18.490, 54.520), (18.490, 54.555), (18.430, 54.555)]
+            ),
         },
         {
             "district_id": "GDY-04",
             "name": "Cisowa",
             "area_ha": 188.7,
-            "geometry": Polygon([(18.470, 54.555), (18.510, 54.555), (18.510, 54.575), (18.470, 54.575)]),
+            "geometry": Polygon(
+                [(18.470, 54.555), (18.510, 54.555), (18.510, 54.575), (18.470, 54.575)]
+            ),
         },
     ]
     gdf = gpd.GeoDataFrame(records, crs="EPSG:4326")

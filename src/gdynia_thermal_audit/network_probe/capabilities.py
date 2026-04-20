@@ -3,12 +3,12 @@
 from __future__ import annotations
 
 import logging
-from typing import Any, Optional
+from typing import Any
 
 log = logging.getLogger("gdynia_thermal_audit.network_probe.capabilities")
 
 
-def fetch_wms_capabilities(url: str, session: Any) -> Optional[dict[str, Any]]:
+def fetch_wms_capabilities(url: str, session: Any) -> dict[str, Any] | None:
     """Fetch and parse WMS GetCapabilities.
 
     Parameters
@@ -52,7 +52,7 @@ def fetch_wms_capabilities(url: str, session: Any) -> Optional[dict[str, Any]]:
         return None
 
 
-def fetch_wmts_capabilities(url: str, session: Any) -> Optional[dict[str, Any]]:
+def fetch_wmts_capabilities(url: str, session: Any) -> dict[str, Any] | None:
     """Fetch and parse WMTS GetCapabilities."""
     caps_url = _ensure_caps_url(url, "WMTS")
     log.info("Fetching WMTS capabilities: %s", caps_url)
@@ -80,7 +80,7 @@ def fetch_wmts_capabilities(url: str, session: Any) -> Optional[dict[str, Any]]:
         return None
 
 
-def fetch_wfs_capabilities(url: str, session: Any) -> Optional[dict[str, Any]]:
+def fetch_wfs_capabilities(url: str, session: Any) -> dict[str, Any] | None:
     """Fetch and parse WFS GetCapabilities."""
     caps_url = _ensure_caps_url(url, "WFS")
     log.info("Fetching WFS capabilities: %s", caps_url)

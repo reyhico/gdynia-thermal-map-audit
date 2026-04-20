@@ -58,7 +58,9 @@ def export_all_article_tables(
     p3_csv = output_dir / "table3_indicator_summary.csv"
     p3_tex = output_dir / "table3_indicator_summary.tex"
     t3.to_csv(p3_csv)
-    _save_latex(t3.reset_index(), p3_tex, caption="Indicator summary statistics", label="tab:indicators")
+    _save_latex(
+        t3.reset_index(), p3_tex, caption="Indicator summary statistics", label="tab:indicators"
+    )
     paths["table3_csv"] = p3_csv
     paths["table3_tex"] = p3_tex
 
