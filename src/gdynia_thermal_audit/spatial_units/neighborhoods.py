@@ -25,7 +25,7 @@ def load_neighborhoods(path: Path | str) -> gpd.GeoDataFrame:
     gdf = gpd.read_file(path)
     log.info("Loaded %d neighborhoods from %s", len(gdf), path)
     if "neighborhood_id" not in gdf.columns:
-        gdf["neighborhood_id"] = [f"NBH-{i+1:04d}" for i in range(len(gdf))]
+        gdf["neighborhood_id"] = [f"NBH-{i + 1:04d}" for i in range(len(gdf))]
     if gdf.crs is None:
         log.warning("No CRS found; assuming EPSG:4326")
         gdf = gdf.set_crs(epsg=4326)

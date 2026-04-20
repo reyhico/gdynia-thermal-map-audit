@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import logging
 import time
-from dataclasses import dataclass, field
-from typing import Any, Optional
+from dataclasses import dataclass
+from typing import Any
 
 log = logging.getLogger("gdynia_thermal_audit.network_probe.endpoint_probe")
 
@@ -15,14 +15,14 @@ class ProbeResult:
     """Result of probing a single HTTP endpoint."""
 
     url: str
-    status_code: Optional[int] = None
-    content_type: Optional[str] = None
-    content_length: Optional[int] = None
-    last_modified: Optional[str] = None
-    redirect_url: Optional[str] = None
-    latency_ms: Optional[float] = None
+    status_code: int | None = None
+    content_type: str | None = None
+    content_length: int | None = None
+    last_modified: str | None = None
+    redirect_url: str | None = None
+    latency_ms: float | None = None
     notes: str = ""
-    error: Optional[str] = None
+    error: str | None = None
 
 
 def probe_endpoint(
@@ -51,7 +51,7 @@ def probe_endpoint(
             resp = session.get(url, follow_redirects=True)
         elapsed_ms = (time.monotonic() - t0) * 1000
 
-        redirect_url: Optional[str] = None
+        redirect_url: str | None = None
         if resp.history:
             redirect_url = str(resp.url)
 
@@ -72,7 +72,7 @@ def probe_endpoint(
         return ProbeResult(url=url, error=str(exc))
 
 
-def _parse_content_length(value: Optional[str]) -> Optional[int]:
+def _parse_content_length(value: str | None) -> int | None:
     if value is None:
         return None
     try:

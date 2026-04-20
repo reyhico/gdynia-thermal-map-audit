@@ -62,8 +62,8 @@ def compute_annotation_indicators(
         unit_id = zone[id_col]
         in_zone = ann_gdf[ann_gdf.geometry.within(geom)]
 
-        anomaly_mask = in_zone["observed_anomaly"].astype(str).str.lower().isin(
-            ("true", "1", "yes", "t")
+        anomaly_mask = (
+            in_zone["observed_anomaly"].astype(str).str.lower().isin(("true", "1", "yes", "t"))
         )
         anomaly_recs = in_zone[anomaly_mask]
 

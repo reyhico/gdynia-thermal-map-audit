@@ -5,14 +5,13 @@ from __future__ import annotations
 import logging
 import math
 from pathlib import Path
-from typing import Tuple
 
 import geopandas as gpd
-from shapely.geometry import Polygon, box
+from shapely.geometry import box
 
 log = logging.getLogger("gdynia_thermal_audit.spatial_units.grid")
 
-BBox = Tuple[float, float, float, float]  # (xmin, ymin, xmax, ymax)
+BBox = tuple[float, float, float, float]  # (xmin, ymin, xmax, ymax)
 
 
 def generate_grid(

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import logging
-from typing import Literal, Optional
+from typing import Literal
 
 import geopandas as gpd
 import pandas as pd
@@ -15,7 +15,7 @@ def sample_buildings(
     buildings_gdf: gpd.GeoDataFrame,
     n: int,
     method: Literal["random", "stratified"] = "random",
-    spatial_unit_gdf: Optional[gpd.GeoDataFrame] = None,
+    spatial_unit_gdf: gpd.GeoDataFrame | None = None,
     random_state: int = 42,
 ) -> gpd.GeoDataFrame:
     """Sample buildings for manual annotation.
@@ -60,7 +60,9 @@ def sample_buildings(
         if buildings_gdf.crs != spatial_unit_gdf.crs:
             spatial_unit_gdf = spatial_unit_gdf.to_crs(buildings_gdf.crs)
 
-        joined = gpd.sjoin(buildings_gdf, spatial_unit_gdf[["geometry"]], how="left", predicate="intersects")
+        joined = gpd.sjoin(
+            buildings_gdf, spatial_unit_gdf[["geometry"]], how="left", predicate="intersects"
+        )
         unit_col = "index_right"
 
         unit_counts = joined[unit_col].value_counts()

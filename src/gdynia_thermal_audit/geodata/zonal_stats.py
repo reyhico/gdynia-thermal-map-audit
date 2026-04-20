@@ -3,12 +3,12 @@
 from __future__ import annotations
 
 import logging
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Sequence
 
+import geopandas as gpd
 import numpy as np
 import pandas as pd
-import geopandas as gpd
 
 log = logging.getLogger("gdynia_thermal_audit.geodata.zonal_stats")
 
@@ -64,15 +64,12 @@ def compute_zonal_stats(
         for idx, row in zones_gdf.iterrows():
             geom = row.geometry
             if geom is None or geom.is_empty:
-                rows.append({"zone_index": idx, **{s: None for s in stats}})
+                rows.append({"zone_index": idx, **dict.fromkeys(stats)})
                 continue
             try:
                 out_arr, _ = rio_mask(ds, [geom], crop=True, filled=True)
                 values = out_arr[band - 1].astype(float)
-                if nd is not None:
-                    valid = values[values != nd]
-                else:
-                    valid = values.ravel()
+                valid = values[values != nd] if nd is not None else values.ravel()
 
                 stat_row: dict = {"zone_index": idx}
                 for s in stats:
@@ -99,6 +96,6 @@ def compute_zonal_stats(
 
             except Exception as exc:
                 log.warning("Zonal stats failed for zone %s: %s", idx, exc)
-                rows.append({"zone_index": idx, **{s: None for s in stats}})
+                rows.append({"zone_index": idx, **dict.fromkeys(stats)})
 
     return pd.DataFrame(rows)

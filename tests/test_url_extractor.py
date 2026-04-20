@@ -1,7 +1,5 @@
 """Tests for url_extractor module."""
 
-import pytest
-
 from gdynia_thermal_audit.parser.url_extractor import (
     classify_url,
     extract_geospatial_urls,

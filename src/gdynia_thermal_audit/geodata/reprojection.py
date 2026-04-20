@@ -60,13 +60,13 @@ def reproject_raster(
     from rasterio.crs import CRS
     from rasterio.warp import Resampling, calculate_default_transform, reproject
 
-    _RESAMPLING = {
+    _resampling = {
         "nearest": Resampling.nearest,
         "bilinear": Resampling.bilinear,
         "cubic": Resampling.cubic,
         "lanczos": Resampling.lanczos,
     }
-    resamp = _RESAMPLING.get(resampling_method, Resampling.bilinear)
+    resamp = _resampling.get(resampling_method, Resampling.bilinear)
     dst_crs = CRS.from_epsg(target_epsg)
 
     input_path = Path(input_path)

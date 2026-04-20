@@ -56,10 +56,5 @@ def make_indicator_summary_table(indicators_df: pd.DataFrame) -> pd.DataFrame:
     if not numeric_cols:
         return pd.DataFrame({"message": ["No numeric indicator columns found"]})
 
-    summary = (
-        indicators_df[numeric_cols]
-        .describe()
-        .round(4)
-        .T.rename(columns={"50%": "median"})
-    )
+    summary = indicators_df[numeric_cols].describe().round(4).T.rename(columns={"50%": "median"})
     return summary

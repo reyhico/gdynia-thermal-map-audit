@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import pathlib
-from typing import Annotated, Optional
+from typing import Annotated
 
 import typer
 from rich.console import Console
@@ -34,7 +34,7 @@ def _version_callback(value: bool) -> None:
 @app.callback()
 def _main(
     version: Annotated[
-        Optional[bool],
+        bool | None,
         typer.Option("--version", "-V", callback=_version_callback, is_eager=True),
     ] = None,
 ) -> None:
@@ -61,8 +61,8 @@ def _setup(settings: Settings) -> None:
 
 @app.command("audit-site")
 def audit_site(
-    url: Annotated[Optional[str], typer.Option("--url", "-u")] = None,
-    output_dir: Annotated[Optional[pathlib.Path], typer.Option("--output-dir")] = None,
+    url: Annotated[str | None, typer.Option("--url", "-u")] = None,
+    output_dir: Annotated[pathlib.Path | None, typer.Option("--output-dir")] = None,
 ) -> None:
     """Download and snapshot the target platform landing page."""
     import httpx
@@ -86,7 +86,7 @@ def audit_site(
 
 @app.command("inspect-viewer")
 def inspect_viewer(
-    url: Annotated[Optional[str], typer.Option("--url", "-u")] = None,
+    url: Annotated[str | None, typer.Option("--url", "-u")] = None,
 ) -> None:
     """Snapshot the viewer page HTML and record metadata."""
     import httpx
@@ -130,7 +130,9 @@ def inventory_assets(
         js_items = inventory_scripts(html_content)
         audit_results = {"html_content": html_content, "scripts": js_items}
     else:
-        console.print("[yellow]Warning:[/yellow] No landing_page.html found; using empty inventory.")
+        console.print(
+            "[yellow]Warning:[/yellow] No landing_page.html found; using empty inventory."
+        )
         audit_results = {}
 
     df = build_asset_catalog(audit_results)
@@ -148,11 +150,10 @@ def inventory_assets(
 
 @app.command("probe-endpoints")
 def probe_endpoints(
-    candidates_file: Annotated[Optional[pathlib.Path], typer.Option()] = None,
+    candidates_file: Annotated[pathlib.Path | None, typer.Option()] = None,
 ) -> None:
     """Probe discovered endpoints and check OGC capabilities."""
     import pandas as pd
-    import httpx
 
     from gdynia_thermal_audit.network_probe.service_discovery import discover_services
     from gdynia_thermal_audit.utils.io import ensure_dir, save_csv
@@ -184,21 +185,23 @@ def probe_endpoints(
 
 @app.command("fetch-assets")
 def fetch_assets(
-    inventory_file: Annotated[Optional[pathlib.Path], typer.Option()] = None,
+    inventory_file: Annotated[pathlib.Path | None, typer.Option()] = None,
 ) -> None:
     """Download recoverable assets listed in the source inventory."""
+    import httpx
     import pandas as pd
 
     from gdynia_thermal_audit.downloader.fetch import fetch_resource
     from gdynia_thermal_audit.utils.io import ensure_dir
-    import httpx
 
     settings = _get_settings()
     _setup(settings)
     raw = pathlib.Path(settings.data_dir) / "raw"
     ensure_dir(raw)
 
-    inv_path = inventory_file or (pathlib.Path(settings.data_dir) / "interim" / "asset_catalog.csv")
+    inv_path = inventory_file or (
+        pathlib.Path(settings.data_dir) / "interim" / "asset_catalog.csv"
+    )
     if not inv_path.exists():
         console.print("[yellow]No inventory file found; nothing to fetch.[/yellow]")
         raise typer.Exit()
@@ -213,7 +216,9 @@ def fetch_assets(
             if not url or str(url).startswith("data:"):
                 continue
             local = raw / pathlib.Path(url).name
-            ok = fetch_resource(url, local, session, settings.request_delay_s, settings.max_retries)
+            ok = fetch_resource(
+                url, local, session, settings.request_delay_s, settings.max_retries
+            )
             if ok:
                 downloaded += 1
     console.print(f"[green]Fetched {downloaded} assets.[/green]")
@@ -221,7 +226,7 @@ def fetch_assets(
 
 @app.command("parse-configs")
 def parse_configs(
-    js_dir: Annotated[Optional[pathlib.Path], typer.Option()] = None,
+    js_dir: Annotated[pathlib.Path | None, typer.Option()] = None,
 ) -> None:
     """Parse JavaScript config files for layer definitions and endpoint URLs."""
     import json
@@ -249,7 +254,7 @@ def parse_configs(
 
 @app.command("build-layer-catalog")
 def build_layer_catalog(
-    probe_file: Annotated[Optional[pathlib.Path], typer.Option()] = None,
+    probe_file: Annotated[pathlib.Path | None, typer.Option()] = None,
 ) -> None:
     """Build the layer catalog from discovered services."""
     import pandas as pd
@@ -320,7 +325,9 @@ def import_neighborhoods(
 
 @app.command("build-grid")
 def build_grid(
-    size: Annotated[int, typer.Option("--size", "-s", help="Cell size in metres (100/250/500)")] = 250,
+    size: Annotated[
+        int, typer.Option("--size", "-s", help="Cell size in metres (100/250/500)")
+    ] = 250,
 ) -> None:
     """Generate a regular square-cell grid covering Gdynia."""
     from pyproj import Transformer
@@ -355,7 +362,9 @@ def compute_raster_indicators(
     """Compute raster-based thermal indicators (Scenario A)."""
     import geopandas as gpd
 
-    from gdynia_thermal_audit.indicators.raster_indicators import compute_raster_indicators as _compute
+    from gdynia_thermal_audit.indicators.raster_indicators import (
+        compute_raster_indicators as _compute,
+    )
     from gdynia_thermal_audit.utils.io import ensure_dir, save_csv
 
     settings = _get_settings()
@@ -377,8 +386,10 @@ def compute_vector_indicators(
     """Compute vector-based thermal indicators (Scenario B)."""
     import geopandas as gpd
 
-    from gdynia_thermal_audit.indicators.vector_indicators import compute_vector_indicators as _compute
-    from gdynia_thermal_audit.utils.io import ensure_dir, save_csv
+    from gdynia_thermal_audit.indicators.vector_indicators import (
+        compute_vector_indicators as _compute,
+    )
+    from gdynia_thermal_audit.utils.io import save_csv
 
     settings = _get_settings()
     _setup(settings)
@@ -393,7 +404,7 @@ def compute_vector_indicators(
 
 @app.command("compute-annotation-indicators")
 def compute_annotation_indicators(
-    annotations: Annotated[Optional[pathlib.Path], typer.Option()] = None,
+    annotations: Annotated[pathlib.Path | None, typer.Option()] = None,
     units_layer: Annotated[str, typer.Option()] = "districts",
 ) -> None:
     """Compute annotation-based thermal indicators (Scenario C)."""
@@ -422,6 +433,7 @@ def compute_annotation_indicators(
         gdf_zones = gpd.read_file(gpkg, layer=units_layer)
     else:
         from gdynia_thermal_audit.spatial_units.districts import get_gdynia_districts_placeholder
+
         gdf_zones = get_gdynia_districts_placeholder()
 
     df = _compute(gdf_zones, df_ann)
@@ -440,14 +452,13 @@ def compute_indicators(
     """Run all available indicator computations."""
     console.print(f"Running indicators with scenario=[bold]{scenario}[/bold] …")
     if scenario in ("auto", "annotation"):
-        ctx = typer.Context(compute_annotation_indicators)
         compute_annotation_indicators(units_layer=units_layer)
     console.print("[green]Indicator computation complete.[/green]")
 
 
 @app.command("validate-annotations")
 def validate_annotations_cmd(
-    annotations: Annotated[Optional[pathlib.Path], typer.Argument()] = None,
+    annotations: Annotated[pathlib.Path | None, typer.Argument()] = None,
 ) -> None:
     """Validate an annotation CSV file."""
     import pandas as pd
@@ -476,7 +487,7 @@ def validate_annotations_cmd(
 def merge_annotations_cmd(
     existing: Annotated[pathlib.Path, typer.Argument()],
     new: Annotated[pathlib.Path, typer.Argument()],
-    output: Annotated[Optional[pathlib.Path], typer.Option()] = None,
+    output: Annotated[pathlib.Path | None, typer.Option()] = None,
 ) -> None:
     """Merge a new annotation CSV into an existing one, deduplicating by record_id."""
     import pandas as pd
@@ -496,8 +507,8 @@ def merge_annotations_cmd(
 
 @app.command("export-article-tables")
 def export_article_tables(
-    indicators_file: Annotated[Optional[pathlib.Path], typer.Option()] = None,
-    source_inventory_file: Annotated[Optional[pathlib.Path], typer.Option()] = None,
+    indicators_file: Annotated[pathlib.Path | None, typer.Option()] = None,
+    source_inventory_file: Annotated[pathlib.Path | None, typer.Option()] = None,
 ) -> None:
     """Export publication-ready tables."""
     import pandas as pd
@@ -516,7 +527,9 @@ def export_article_tables(
         ind_path = pathlib.Path(settings.data_dir) / "demo" / "demo_annotations.csv"
         console.print("[yellow]Using demo data for indicators.[/yellow]")
 
-    inv_path = source_inventory_file or (pathlib.Path(settings.data_dir) / "demo" / "demo_source_inventory.csv")
+    inv_path = source_inventory_file or (
+        pathlib.Path(settings.data_dir) / "demo" / "demo_source_inventory.csv"
+    )
     df_ind = pd.read_csv(ind_path)
     df_inv = pd.read_csv(inv_path)
     export_all_article_tables(df_ind, df_inv, out)
@@ -525,7 +538,7 @@ def export_article_tables(
 
 @app.command("export-figures")
 def export_figures(
-    indicators_file: Annotated[Optional[pathlib.Path], typer.Option()] = None,
+    indicators_file: Annotated[pathlib.Path | None, typer.Option()] = None,
 ) -> None:
     """Export publication-ready figures."""
     import pandas as pd
@@ -553,11 +566,11 @@ def export_figures(
 def run_pipeline(
     scenario: Annotated[str, typer.Option("--scenario", "-s")] = "auto",
     demo: Annotated[bool, typer.Option("--demo/--no-demo")] = False,
-    config: Annotated[Optional[pathlib.Path], typer.Option("--config")] = None,
+    config: Annotated[pathlib.Path | None, typer.Option("--config")] = None,
 ) -> None:
     """Run the full Phase 1 pipeline end-to-end."""
-    import uuid
     import datetime
+    import uuid
 
     from gdynia_thermal_audit.utils.io import ensure_dir
 
