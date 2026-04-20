@@ -92,10 +92,11 @@ select = [
     "SIM", # flake8-simplify
 ]
 ignore = [
-    "ANN101",  # self annotation not required
-    "ANN102",  # cls annotation not required
+    "ANN101",  # self annotation not required (removed rule)
+    "ANN102",  # cls annotation not required (removed rule)
     "ANN201",  # public function return type (too noisy at early stage)
     "ANN001",  # function arg type (too noisy at early stage)
+    "ANN401",  # typing.Any is acceptable for HTTP sessions / JSON payloads
     "E501",    # line too long — handled by formatter
 ]
 

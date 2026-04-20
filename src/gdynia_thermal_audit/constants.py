@@ -1,7 +1,5 @@
 """Project-wide constants."""
 
-from pathlib import Path
-
 EPSG_POLAND: int = 2180
 EPSG_WGS84: int = 4326
 

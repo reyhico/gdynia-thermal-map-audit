@@ -6,7 +6,6 @@ import logging
 from pathlib import Path
 
 import geopandas as gpd
-import pandas as pd
 
 log = logging.getLogger("gdynia_thermal_audit.geodata.vector_utils")
 

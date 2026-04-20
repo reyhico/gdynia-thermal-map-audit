@@ -51,8 +51,17 @@ def build_layer_catalog(sources: list[dict[str, Any]]) -> pd.DataFrame:
     if not rows:
         return pd.DataFrame(
             columns=[
-                "layer_id", "source_url", "service_type", "layer_name", "title",
-                "crs", "format", "bbox_wgs84", "abstract", "timestamp", "notes",
+                "layer_id",
+                "source_url",
+                "service_type",
+                "layer_name",
+                "title",
+                "crs",
+                "format",
+                "bbox_wgs84",
+                "abstract",
+                "timestamp",
+                "notes",
             ]
         )
     return pd.DataFrame(rows)

@@ -1,7 +1,6 @@
 """Tests for geodata.joins module."""
 
 import geopandas as gpd
-import pandas as pd
 import pytest
 from shapely.geometry import Point, Polygon
 
@@ -25,7 +24,7 @@ def polygons_gdf():
 def points_gdf():
     """Three points, two inside the polygons, one outside."""
     pts = [
-        Point(500, 500),   # inside Z1
+        Point(500, 500),  # inside Z1
         Point(1500, 500),  # inside Z2
         Point(3000, 500),  # outside both
     ]

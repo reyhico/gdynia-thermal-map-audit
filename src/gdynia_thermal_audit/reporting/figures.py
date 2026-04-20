@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
-from typing import Optional
 
 import geopandas as gpd
 import matplotlib.pyplot as plt
@@ -18,7 +17,7 @@ def plot_indicators_map(
     indicators_df: pd.DataFrame,
     column: str,
     output_path: Path | str,
-    title: Optional[str] = None,
+    title: str | None = None,
     cmap: str = "YlOrRd",
     figsize: tuple[int, int] = (10, 8),
     dpi: int = 150,
@@ -54,7 +53,9 @@ def plot_indicators_map(
     # Merge indicators onto zones
     id_col = _find_id_col(zones_gdf)
     if "unit_id" in indicators_df.columns and id_col:
-        merged = zones_gdf.merge(indicators_df[["unit_id", column]], left_on=id_col, right_on="unit_id", how="left")
+        merged = zones_gdf.merge(
+            indicators_df[["unit_id", column]], left_on=id_col, right_on="unit_id", how="left"
+        )
     else:
         merged = zones_gdf.copy()
         if column not in merged.columns:
@@ -76,8 +77,14 @@ def plot_indicators_map(
     else:
         merged.plot(ax=ax, color="lightgrey", edgecolor="black", linewidth=0.5)
         ax.text(
-            0.5, 0.5, f"No data for '{column}'",
-            transform=ax.transAxes, ha="center", va="center", fontsize=12, color="grey",
+            0.5,
+            0.5,
+            f"No data for '{column}'",
+            transform=ax.transAxes,
+            ha="center",
+            va="center",
+            fontsize=12,
+            color="grey",
         )
 
     ax.set_title(title or column.replace("_", " ").title(), fontsize=14, pad=12)
@@ -89,7 +96,7 @@ def plot_indicators_map(
     return output_path
 
 
-def _find_id_col(gdf: gpd.GeoDataFrame) -> Optional[str]:
+def _find_id_col(gdf: gpd.GeoDataFrame) -> str | None:
     for candidate in ("district_id", "neighborhood_id", "cell_id", "id"):
         if candidate in gdf.columns:
             return candidate

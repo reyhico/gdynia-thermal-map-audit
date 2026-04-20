@@ -66,7 +66,15 @@ def build_asset_catalog(audit_results: dict[str, Any]) -> pd.DataFrame:
 
     if not rows:
         return pd.DataFrame(
-            columns=["url", "asset_type", "content_type", "size", "local_path", "checksum", "notes"]
+            columns=[
+                "url",
+                "asset_type",
+                "content_type",
+                "size",
+                "local_path",
+                "checksum",
+                "notes",
+            ]
         )
     return pd.DataFrame(rows)
 

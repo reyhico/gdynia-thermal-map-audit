@@ -62,7 +62,11 @@ def discover_services(
         if owns_session:
             session.close()
 
-    log.info("Probed %d URLs; %d returned HTTP 200", len(results), sum(r.status_code == 200 for r in results))
+    log.info(
+        "Probed %d URLs; %d returned HTTP 200",
+        len(results),
+        sum(r.status_code == 200 for r in results),
+    )
     return results
 
 

@@ -1,7 +1,5 @@
 """Tests for spatial grid generation."""
 
-import math
-
 import geopandas as gpd
 import pytest
 from shapely.geometry import box
@@ -10,7 +8,6 @@ from gdynia_thermal_audit.spatial_units.grid import (
     clip_grid_to_boundary,
     generate_grid,
 )
-
 
 # Small test bbox in EPSG:2180 coordinates (metres)
 _BBOX = (500_000.0, 500_000.0, 500_500.0, 500_500.0)  # 500 m × 500 m area

@@ -1,7 +1,5 @@
 """Tests for raster_utils using a synthetic in-memory raster."""
 
-import io
-import math
 from pathlib import Path
 
 import numpy as np

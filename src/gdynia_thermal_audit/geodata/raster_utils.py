@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 import numpy as np
 
@@ -25,7 +25,6 @@ def read_raster_metadata(path: Path | str) -> dict[str, Any]:
     ``dtype``, ``nodata``, ``transform``, ``bounds``, ``bbox_wgs84``.
     """
     import rasterio
-    from rasterio.crs import CRS
     from pyproj import Transformer
 
     path = Path(path)
@@ -97,9 +96,14 @@ def compute_raster_stats(path: Path | str, band: int = 1) -> dict[str, Any]:
 
     if valid.size == 0:
         return {
-            "min": None, "max": None, "mean": None, "std": None,
-            "median": None, "nodata_fraction": 1.0,
-            "valid_pixels": 0, "total_pixels": total,
+            "min": None,
+            "max": None,
+            "mean": None,
+            "std": None,
+            "median": None,
+            "nodata_fraction": 1.0,
+            "valid_pixels": 0,
+            "total_pixels": total,
         }
 
     return {
