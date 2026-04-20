@@ -1,0 +1,50 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "CLI: audit-site",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "gdynia_thermal_audit.cli",
+      "args": ["audit-site"],
+      "justMyCode": true,
+      "env": {
+        "GTA_LOG_LEVEL": "DEBUG"
+      }
+    },
+    {
+      "name": "CLI: build-grid (250m)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "gdynia_thermal_audit.cli",
+      "args": ["build-grid", "--size", "250"],
+      "justMyCode": true
+    },
+    {
+      "name": "CLI: run-pipeline demo",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "gdynia_thermal_audit.cli",
+      "args": ["run-pipeline", "--demo"],
+      "justMyCode": true
+    },
+    {
+      "name": "Pytest: run all tests",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "args": ["tests/", "-v", "--tb=short"],
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Pytest: current file",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "args": ["${file}", "-v"],
+      "console": "integratedTerminal",
+      "justMyCode": false
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+project:
+  name: gdynia-thermal-map-audit
+  version: "0.1.0"
+  epsg: 2180
+
+target:
+  landing_url: "https://termalne.obliview.com"
+  viewer_url: "https://termalne.obliview.com"
+
+network:
+  request_delay_s: 1.0
+  max_retries: 3
+  timeout_s: 30
+  user_agent: "GdyniaThermalAudit/0.1 (academic research)"
+
+spatial_units:
+  preferred: "districts"  # districts | neighborhoods | grid
+  grid_sizes_m: [100, 250, 500]
+  districts_path: null    # path to GeoJSON/GPKG of Gdynia administrative districts
+  neighborhoods_path: null  # path to GeoJSON/GPKG of Gdynia neighborhoods
+
+paths:
+  data_dir: "data"
+  output_dir: "outputs"
+
+scenario:
+  # auto  — picks best available data source automatically
+  # raster — use raster tile / GeoTIFF zonal stats
+  # vector — use vector feature overlays
+  # manual — use manual annotation CSV only
+  mode: "auto"
+
+indicators:
+  anomaly_threshold: 0.75  # normalised intensity value above which a pixel is 'anomalous'
+  min_coverage_ratio: 0.10  # ignore zones with <10 % raster coverage
+
+reporting:
+  table_format: "csv"   # csv | latex
+  figure_dpi: 150
+  figure_format: "png"  # png | pdf | svg
