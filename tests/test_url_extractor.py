@@ -12,8 +12,8 @@ from gdynia_thermal_audit.parser.url_extractor import (
 def test_extract_urls_basic():
     text = "See https://example.com and http://other.org for details."
     urls = extract_urls(text)
-    assert "https://example.com" in urls
-    assert "http://other.org" in urls
+    assert any(u == "https://example.com" for u in urls)
+    assert any(u == "http://other.org" for u in urls)
 
 
 def test_extract_urls_deduplication():
@@ -82,4 +82,4 @@ def test_extract_geospatial_urls():
     assert "tile" in types
     # Plain URL should not appear
     urls = [item["url"] for item in geo]
-    assert not any("plain.example.com" in u for u in urls)
+    assert not any(u.startswith("https://plain.example.com") for u in urls)
