@@ -4,13 +4,11 @@ import pytest
 from pydantic import ValidationError
 
 from gdynia_thermal_audit.schemas.annotation_records import AnnotationRecord
-from gdynia_thermal_audit.schemas.source_inventory import SourceInventoryRecord
-from gdynia_thermal_audit.schemas.layer_catalog import LayerCatalogRecord
-from gdynia_thermal_audit.schemas.fetch_log import FetchLogRecord
-from gdynia_thermal_audit.schemas.spatial_unit_metrics import SpatialUnitMetrics
 from gdynia_thermal_audit.schemas.building_level_metrics import BuildingLevelMetrics
+from gdynia_thermal_audit.schemas.layer_catalog import LayerCatalogRecord
 from gdynia_thermal_audit.schemas.pipeline_run_log import PipelineRunLog
-
+from gdynia_thermal_audit.schemas.source_inventory import SourceInventoryRecord
+from gdynia_thermal_audit.schemas.spatial_unit_metrics import SpatialUnitMetrics
 
 # ---------------------------------------------------------------------------
 # AnnotationRecord

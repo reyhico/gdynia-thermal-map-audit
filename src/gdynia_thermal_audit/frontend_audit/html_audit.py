@@ -42,16 +42,23 @@ def audit_landing_page(
     soup = BeautifulSoup(html, "lxml")
 
     scripts = [
-        {"src": tag.get("src", ""), "inline": not bool(tag.get("src")), "snippet": tag.string or ""}
+        {
+            "src": tag.get("src", ""),
+            "inline": not bool(tag.get("src")),
+            "snippet": tag.string or "",
+        }
         for tag in soup.find_all("script")
     ]
     links = [
-        {"href": tag.get("href", ""), "rel": " ".join(tag.get("rel", [])), "type": tag.get("type", "")}
+        {
+            "href": tag.get("href", ""),
+            "rel": " ".join(tag.get("rel", [])),
+            "type": tag.get("type", ""),
+        }
         for tag in soup.find_all("link")
     ]
     images = [
-        {"src": tag.get("src", ""), "alt": tag.get("alt", "")}
-        for tag in soup.find_all("img")
+        {"src": tag.get("src", ""), "alt": tag.get("alt", "")} for tag in soup.find_all("img")
     ]
 
     # Collect all candidate URLs
@@ -81,7 +88,9 @@ def audit_landing_page(
         "candidate_urls": candidate_urls,
     }
     inventory_path = output_dir / "landing_page_inventory.json"
-    inventory_path.write_text(json.dumps(inventory, indent=2, ensure_ascii=False), encoding="utf-8")
+    inventory_path.write_text(
+        json.dumps(inventory, indent=2, ensure_ascii=False), encoding="utf-8"
+    )
     log.info("Saved inventory to %s", inventory_path)
 
     return {

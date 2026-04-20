@@ -3,10 +3,8 @@
 from __future__ import annotations
 
 import logging
-from typing import Optional
 
 import pandas as pd
-import numpy as np
 
 log = logging.getLogger("gdynia_thermal_audit.indicators.priority_index")
 
@@ -20,7 +18,7 @@ _DEFAULT_WEIGHTS = {
 
 def compute_priority_index(
     indicators_df: pd.DataFrame,
-    weights: Optional[dict[str, float]] = None,
+    weights: dict[str, float] | None = None,
 ) -> pd.DataFrame:
     """Compute a normalised composite priority index.
 
@@ -68,9 +66,7 @@ def compute_priority_index(
 
     # Weighted sum
     total_weight = sum(available_components.values())
-    priority = sum(
-        z_df[col] * (w / total_weight) for col, w in available_components.items()
-    )
+    priority = sum(z_df[col] * (w / total_weight) for col, w in available_components.items())
 
     df["priority_index"] = priority.round(4)
     log.info(

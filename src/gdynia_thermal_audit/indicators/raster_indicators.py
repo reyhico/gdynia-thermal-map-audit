@@ -62,11 +62,13 @@ def compute_raster_indicators(
     id_series = zones_gdf[id_col].reset_index(drop=True)
 
     rows = []
-    for i, zrow in zs.iterrows():
+    for _, zrow in zs.iterrows():
         zone_idx = zrow["zone_index"]
         unit_id = id_series.iloc[zone_idx] if zone_idx < len(id_series) else str(zone_idx)
 
-        total_pixels = zones_gdf.iloc[zone_idx].geometry.area if zone_idx < len(zones_gdf) else None
+        total_pixels = (
+            zones_gdf.iloc[zone_idx].geometry.area if zone_idx < len(zones_gdf) else None
+        )
         valid_count = zrow.get("count")
         coverage = None
         if valid_count is not None and total_pixels and total_pixels > 0:

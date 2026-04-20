@@ -5,7 +5,6 @@ from __future__ import annotations
 import re
 from typing import Any
 
-
 _JS_URL_RE = re.compile(r"""['"]([^'"]+\.js(?:\?[^'"]*)?)['"]\s*""")
 _CONFIG_RE = re.compile(
     r"""(?:var|let|const)\s+(\w*[Cc]onfig\w*)\s*=\s*(\{[^;]+\})""",
@@ -65,10 +64,7 @@ def extract_js_urls(js_text: str) -> list[str]:
 
 def extract_config_refs(js_text: str) -> list[dict[str, str]]:
     """Return candidate config object variable names and their raw text."""
-    return [
-        {"name": m.group(1), "raw": m.group(2)[:200]}
-        for m in _CONFIG_RE.finditer(js_text)
-    ]
+    return [{"name": m.group(1), "raw": m.group(2)[:200]} for m in _CONFIG_RE.finditer(js_text)]
 
 
 def extract_tile_templates(js_text: str) -> list[str]:
